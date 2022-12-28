@@ -20,7 +20,7 @@ describe("Given I am connected as an employee", () => {
       }))
       const root = document.createElement("div")
       root.setAttribute("id", "root")
-      document.body.append(root)
+      document.body.append(root) 
       router()
       window.onNavigate(ROUTES_PATH.Bills)
       await waitFor(() => screen.getByTestId('icon-window'))

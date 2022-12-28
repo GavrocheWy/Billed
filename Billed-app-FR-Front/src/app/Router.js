@@ -61,7 +61,7 @@ export default () => {
   }
 
   window.onpopstate = (e) => {
-    const user = JSON.parse(localStorage.getItem('user'))
+    const user = JSON.parse(localStorage.getItem('user')) 
     if (window.location.pathname === "/" && !user) {
       document.body.style.backgroundColor="#0E5AE5"
       rootDiv.innerHTML = ROUTES({ pathname: window.location.pathname })
