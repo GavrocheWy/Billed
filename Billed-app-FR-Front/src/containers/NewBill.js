@@ -18,6 +18,7 @@ export default class NewBill {
 
   handleChangeFile = e => {
     e.preventDefault()
+    
     const fileSelector = this.document.querySelector(`input[data-testid="file"]`)
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
 
