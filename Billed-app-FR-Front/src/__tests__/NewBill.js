@@ -5,39 +5,38 @@
 import { fireEvent, screen, waitFor } from "@testing-library/dom"
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
-
 import { ROUTES_PATH, ROUTES } from "../constants/routes.js";
 import { localStorageMock } from "../__mocks__/localStorage.js";
-
 import BillsUI from "../views/BillsUI.js";
-
 import store from "../__mocks__/store.js";
 import userEvent from '@testing-library/user-event'
+import router from "../app/Router.js";
+
+// Set user in localstorage
+Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+window.localStorage.setItem('user', JSON.stringify({
+  type: 'Employee',
+  email: 'a@a'
+}))
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
 
-    // Test if the mail icon is highlighted
+    // The mail icon whould be highlighted
     test("Then mail icon in vertical layout should be highlighted", async () => {
-
-      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-      window.localStorage.setItem('user', JSON.stringify({
-        type: 'Employee'
-      }))
-
       const root = document.createElement("div")
       root.setAttribute("id", "root")
       document.body.append(root)
-      const pathname = ROUTES_PATH['NewBill']
+      router()
+      const pathname = ROUTES_PATH['New Bills']
       root.innerHTML = ROUTES({ pathname: pathname, loading: true })
-
-      document.getElementById('layout-icon1').classList.remove('active-icon')
-      document.getElementById('layout-icon2').classList.add('active-icon')
-
-      const mailIcon = screen.getByTestId('icon-mail')
-      const iconActivated = mailIcon.classList.contains('active-icon')
-      expect(iconActivated).toBeTruthy();
+      window.onNavigate(ROUTES_PATH.NewBill)
+      const windowIcon = screen.getByTestId('icon-mail')
+      const iconActivated = windowIcon.classList.contains('active-icon')
+      expect(iconActivated).toBeTruthy()
     })
+
+    // The form should appear with nine inputs
 
   })
 
