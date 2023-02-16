@@ -146,14 +146,7 @@ export default class {
     }
 
     bills.forEach(bill => {
-      const billSelector = document.querySelector(`#open-bill${bill.id}`)
-      console.log(billSelector)
-      if (billSelector) {
-        if (!billSelector.hasAttribute('data-has-event')) {
-          $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
-          billSelector.setAttribute('data-has-event', 'true')
-        }
-      }
+      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
     })
 
     return bills
