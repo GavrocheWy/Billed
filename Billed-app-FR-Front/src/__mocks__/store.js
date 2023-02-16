@@ -1,5 +1,5 @@
 const mockedBills = {
-  list() {
+  list() { 
     return Promise.resolve([{
       "id": "47qAXb6fIm2zOKkLzMro",
       "vat": "80",

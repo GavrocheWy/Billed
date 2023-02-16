@@ -70,7 +70,7 @@ describe('Given I am connected as an Admin', () => {
 
       const icon1 = screen.getByTestId('arrow-icon1')
       const icon2 = screen.getByTestId('arrow-icon2')
-      const icon3 = screen.getByTestId('arrow-icon3')
+      const icon3 = screen.getByTestId('arrow-icon3') 
 
       icon1.addEventListener('click', handleShowTickets1)
       userEvent.click(icon1)

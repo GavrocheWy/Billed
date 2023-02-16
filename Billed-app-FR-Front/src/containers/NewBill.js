@@ -16,9 +16,17 @@ export default class NewBill {
     new Logout({ document, localStorage, onNavigate })
   }
 
+  appendFileErrorMessage = () => {
+    const fileErrorMessage = this.document.createElement('p')
+    fileErrorMessage.setAttribute('data-testid', 'fileFormat-errorMessage')
+    fileErrorMessage.textContent = 'Votre justificatif doit être une image de format (.jpg) ou (.jpeg) ou (.png)'
+    const parent = this.document.querySelector('#new-bill-file-field')
+    parent.appendChild(fileErrorMessage)
+  }
+
   handleChangeFile = e => {
     e.preventDefault()
-    
+
     const fileSelector = this.document.querySelector(`input[data-testid="file"]`)
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
 
@@ -26,32 +34,32 @@ export default class NewBill {
     const fileType = destructuredFile[0]
 
     if (fileType !== 'image') {
-      console.log('Désolé, ce type de fichier n\'est pas supporté. Veuillez utiliser un fichier de type JPG ou PNG svp.')
+      this.appendFileErrorMessage()
       fileSelector.value = ''
       return false
+    } else {
+      const filePath = e.target.value.split(/\\/g)
+      const fileName = filePath[filePath.length - 1]
+      const formData = new FormData()
+      const email = JSON.parse(localStorage.getItem("user")).email
+      formData.append('file', file)
+      formData.append('email', email)
+
+      this.store
+        .bills()
+        .create({
+          data: formData,
+          headers: {
+            noContentType: true
+          }
+        })
+        .then(({ fileUrl, key }) => {
+          console.log(fileUrl)
+          this.billId = key
+          this.fileUrl = fileUrl
+          this.fileName = fileName
+        }).catch(error => console.error(error))
     }
-
-    const filePath = e.target.value.split(/\\/g)
-    const fileName = filePath[filePath.length - 1]
-    const formData = new FormData()
-    const email = JSON.parse(localStorage.getItem("user")).email
-    formData.append('file', file)
-    formData.append('email', email)
-
-    this.store
-      .bills()
-      .create({
-        data: formData,
-        headers: {
-          noContentType: true
-        }
-      })
-      .then(({ fileUrl, key }) => {
-        console.log(fileUrl)
-        this.billId = key
-        this.fileUrl = fileUrl
-        this.fileName = fileName
-      }).catch(error => console.error(error))
   }
   handleSubmit = e => {
     e.preventDefault()

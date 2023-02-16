@@ -145,7 +145,6 @@ export default class {
       this.counter++
     }
 
-    // DEBUG
     bills.forEach(bill => {
       const billSelector = document.querySelector(`#open-bill${bill.id}`)
       console.log(billSelector)
