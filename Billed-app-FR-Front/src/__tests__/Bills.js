@@ -71,7 +71,7 @@ describe("Given I am connected as an employee", () => {
     })
 
     // As an employee, I can click on the new bill button to add a new bill
-    describe('When I click on the "Nouvelle note de frais" new bill button', () => {
+    describe('When I click on the new bill button', () => {
       test('It should navigate to the "New bill" page', () => {
         const root = document.createElement("div")
         root.setAttribute("id", "root")
@@ -91,6 +91,8 @@ describe("Given I am connected as an employee", () => {
   })
 })
 
+// Test d'intégration GET
+
 describe("Given I am connected as an employee", () => {
   describe("When I navigate to Bills", () => {
 
@@ -101,17 +103,37 @@ describe("Given I am connected as an employee", () => {
     });
 
     // The bills are loadeds from mocked datas (store)
-    test('Get bills from mocked datas', () => {
+    test('Get bills from mocked datas', async () => {
+
       const root = document.createElement("div")
       root.setAttribute("id", "root")
       document.body.append(root)
       const pathname = ROUTES_PATH['Bills']
+
       root.innerHTML = ROUTES({ pathname: pathname, loading: true })
       const bills = new Bills({ document, onNavigate, store: mockStore, localStorage })
+
       bills.getBills().then(data => {
         root.innerHTML = BillsUI({ data })
         expect(document.querySelector('tbody').rows.length).toBeGreaterThan(0)
+        // Based on mockStore first item
+        expect(data[0]).toStrictEqual({
+          id: '47qAXb6fIm2zOKkLzMro',
+          vat: '80',
+          fileUrl: 'https://test.storage.tld/v0/b/billable-677b6.a…f-1.jpg?alt=media&token=c1640e12-a24b-4b11-ae52-529112e9602a',
+          status: 'En attente',
+          type: 'Hôtel et logement',
+          commentary: 'séminaire billed',
+          name: 'encore',
+          fileName: 'preview-facture-free-201801-pdf-1.jpg',
+          date: '4 Avr. 04',
+          amount: 400,
+          commentAdmin: 'ok',
+          email: 'a@a',
+          pct: 20
+        })
       })
+
     })
 
     // The 404 error should display the 404 error page
