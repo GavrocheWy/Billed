@@ -8,7 +8,7 @@ export default () => {
       <div class='content'>
         <div class='content-header'>
           <div class='content-title'> Envoyer une note de frais </div>
-        </div>
+        </div> 
         <div class="form-newbill-container content-inner">
           <form data-testid="form-new-bill">
             <div class="row">
@@ -53,9 +53,9 @@ export default () => {
                     <label for="commentary" class="bold-label">Commentaire</label>
                     <textarea class="form-control blue-border" data-testid="commentary" rows="3"></textarea>
                   </div>
-                  <div class="col-half">
+                  <div class="col-half" id="new-bill-file-field">
                     <label for="file" class="bold-label">Justificatif</label>
-                    <input required type="file" class="form-control blue-border" data-testid="file" />
+                    <input required type="file" class="form-control blue-border" data-testid="file" accept="image/*"/>
                   </div>
                 </div>
             </div>

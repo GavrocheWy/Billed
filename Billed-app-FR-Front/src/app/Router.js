@@ -31,7 +31,7 @@ export default () => {
       divIcon1.classList.add('active-icon')
       divIcon2.classList.remove('active-icon')
       const bills = new Bills({ document, onNavigate, store, localStorage  })
-      bills.getBills().then(data => {
+      bills.getBills().then(data => { 
         rootDiv.innerHTML = BillsUI({ data })
         const divIcon1 = document.getElementById('layout-icon1')
         const divIcon2 = document.getElementById('layout-icon2')
@@ -61,7 +61,7 @@ export default () => {
   }
 
   window.onpopstate = (e) => {
-    const user = JSON.parse(localStorage.getItem('user'))
+    const user = JSON.parse(localStorage.getItem('user')) 
     if (window.location.pathname === "/" && !user) {
       document.body.style.backgroundColor="#0E5AE5"
       rootDiv.innerHTML = ROUTES({ pathname: window.location.pathname })
